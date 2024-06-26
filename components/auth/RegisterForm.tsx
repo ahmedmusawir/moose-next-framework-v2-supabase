@@ -59,9 +59,23 @@ const RegisterForm = () => {
     },
   });
 
-  const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Login Submitted by the Moose...", data);
-    router.push("/");
+  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log("Signup Response: ", response);
+
+    if (response.ok) {
+      router.push("/");
+    } else {
+      const result = await response.json();
+      console.error("Signup error:", result.error);
+    }
   };
 
   return (

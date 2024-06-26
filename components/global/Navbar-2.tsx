@@ -1,5 +1,4 @@
-"use client";
-
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,7 +14,20 @@ import ThemeToggler from "./ThemeToggler";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const [user, setUser] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await fetch("/api/auth/user");
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData.user);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleLogout = async () => {
     const response = await fetch("/api/auth/logout", {
@@ -46,14 +58,16 @@ const Navbar = () => {
       <div className="flex items-center">
         <ThemeToggler />
 
+        {user && <span className="mr-3">{user.email}</span>}
+
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage
                 src="https://res.cloudinary.com/dyb0qa58h/image/upload/v1699413824/wjykytitrfuv2ubnyzqd.png"
-                alt="baba"
+                alt={user ? user.email : "Avatar"}
               />
-              <AvatarFallback>Baba</AvatarFallback>
+              <AvatarFallback>{user ? user.email[0] : "U"}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -62,9 +76,7 @@ const Navbar = () => {
             <DropdownMenuItem>
               <Link href={"/profile"}>Profile</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>
-              <Link href={"/auth"}>Logout</Link>
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -46,9 +46,23 @@ const LoginForm = () => {
     },
   });
 
-  const handleSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log("Login Submitted by the Moose...", data);
-    router.push("/");
+  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log("Login Submitted by the Moose...", response);
+
+    if (response.ok) {
+      router.push("/");
+    } else {
+      const result = await response.json();
+      console.error("Login error:", result.error);
+    }
   };
 
   return (

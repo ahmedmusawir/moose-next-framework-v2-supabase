@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,24 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ThemeToggler from "./ThemeToggler";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    const response = await fetch("/api/auth/logout", {
-      method: "POST",
-    });
-
-    if (response.ok) {
-      router.push("/auth");
-    } else {
-      const result = await response.json();
-      console.error("Logout error:", result.error);
-    }
-  };
-
   return (
     <div className="bg-primary dark:bg-slate-700 py-2 px-5 flex justify-between">
       <Link href={"/"}>
@@ -62,7 +44,7 @@ const Navbar = () => {
             <DropdownMenuItem>
               <Link href={"/profile"}>Profile</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem>
               <Link href={"/auth"}>Logout</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
