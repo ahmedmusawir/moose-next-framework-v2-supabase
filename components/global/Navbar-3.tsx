@@ -14,34 +14,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ThemeToggler from "./ThemeToggler";
 import Logout from "../auth/Logout";
-import { User as SupabaseUser } from "@supabase/auth-js";
-import { createClient } from "@/utils/supabase/client";
+
+interface User {
+  id: string;
+  email: string;
+  [key: string]: any;
+}
 
 const Navbar = () => {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const supabase = createClient();
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
+      const response = await fetch("/api/auth/user", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
       setUser(data.user);
+      console.log("User:", data.user);
     };
 
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      fetchUser();
-    });
-
-    fetchUser(); // Fetch user on initial load
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [supabase]);
-
-  console.log("User:", user);
+    fetchUser();
+  }, []);
 
   return (
     <div className="bg-primary dark:bg-slate-700 py-2 px-5 flex justify-between">
@@ -66,11 +62,9 @@ const Navbar = () => {
             <Avatar>
               <AvatarImage
                 src="https://res.cloudinary.com/dyb0qa58h/image/upload/v1699413824/wjykytitrfuv2ubnyzqd.png"
-                alt={user ? user.email ?? "Avatar" : "Avatar"}
+                alt={user ? user.email : "Avatar"}
               />
-              <AvatarFallback>
-                {user ? user.email?.[0] ?? "U" : "U"}
-              </AvatarFallback>
+              <AvatarFallback>{user ? user.email[0] : "U"}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>

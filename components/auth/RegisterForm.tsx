@@ -21,6 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { useState } from "react";
 
 const formSchema = z
   .object({
@@ -48,7 +49,9 @@ const formSchema = z
   });
 
 const RegisterForm = () => {
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,6 +78,7 @@ const RegisterForm = () => {
     } else {
       const result = await response.json();
       console.error("Signup error:", result.error);
+      setError(result.error); // Set the error state
     }
   };
 
@@ -82,7 +86,7 @@ const RegisterForm = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Register</CardTitle>
+          <CardTitle>Signup</CardTitle>
           <CardDescription>
             Register your account with your credentials
           </CardDescription>
@@ -177,8 +181,13 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
+              {error && (
+                <div className="text-red-500 dark:text-red-300 text-sm mt-2">
+                  {error}
+                </div>
+              )}
               <Button className="w-full dark:bg-slate-800 dark:text-white">
-                Login
+                Signup
               </Button>
             </form>
           </Form>

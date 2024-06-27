@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,33 +13,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ThemeToggler from "./ThemeToggler";
 import Logout from "../auth/Logout";
+
 import { User as SupabaseUser } from "@supabase/auth-js";
-import { createClient } from "@/utils/supabase/client";
 
-const Navbar = () => {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const supabase = createClient();
+interface NavbarProps {
+  user: SupabaseUser | null;
+}
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
-    };
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      fetchUser();
-    });
-
-    fetchUser(); // Fetch user on initial load
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [supabase]);
-
+const Navbar = ({ user }: NavbarProps) => {
   console.log("User:", user);
 
   return (
@@ -66,11 +46,9 @@ const Navbar = () => {
             <Avatar>
               <AvatarImage
                 src="https://res.cloudinary.com/dyb0qa58h/image/upload/v1699413824/wjykytitrfuv2ubnyzqd.png"
-                alt={user ? user.email ?? "Avatar" : "Avatar"}
+                alt={user ? user.email : "Avatar"}
               />
-              <AvatarFallback>
-                {user ? user.email?.[0] ?? "U" : "U"}
-              </AvatarFallback>
+              <AvatarFallback>{user ? user.email : "U"}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -80,7 +58,7 @@ const Navbar = () => {
               <Link href={"/profile"}>Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Logout /> {/* Use the Logout component */}
+              <Logout />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

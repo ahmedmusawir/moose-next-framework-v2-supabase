@@ -21,6 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { useState } from "react";
 
 const formSchema = z.object({
   email: z
@@ -37,6 +38,7 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +49,9 @@ const LoginForm = () => {
   });
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+    setError(null); // Reset error state before submission
+
+    //Login API call
     const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
@@ -62,6 +67,7 @@ const LoginForm = () => {
     } else {
       const result = await response.json();
       console.error("Login error:", result.error);
+      setError(result.error); // Set the error state
     }
   };
 
@@ -122,6 +128,11 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
+              {error && (
+                <div className="text-red-500 dark:text-red-300 text-sm mt-2">
+                  {error}
+                </div>
+              )}
               <Button className="w-full dark:bg-slate-800 dark:text-white">
                 Login
               </Button>
