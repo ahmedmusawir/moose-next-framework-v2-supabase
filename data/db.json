@@ -2,7 +2,7 @@
   "posts": [
     {
       "id": "1",
-      "title": "Exploring OpenAI's GPT-4",
+      "title": "Exploring OpenAI's GPT-4 xxx",
       "body": "OpenAI's GPT-4 has revolutionized the AI industry with its advanced language understanding and generation capabilities. It can generate human-like text, understand context, and even perform creative tasks. The model's applications span various domains, from customer service to content creation.",
       "author": "Ari Gold",
       "date": "2024-09-17",
@@ -34,25 +34,6 @@
       ]
     },
     {
-      "id": "3",
-      "title": "Gemini: Bridging AI and Humans",
-      "body": "Gemini aims to bridge the gap between AI and human interaction, making it more intuitive. By leveraging advanced algorithms, Gemini can predict user needs effectively. This opens new avenues for human-computer interaction, enhancing user experience.",
-      "author": "Sheldon Cooper",
-      "date": "2024-08-05",
-      "comments": [
-        {
-          "id": "1",
-          "text": "This could change the way we interact with AI.",
-          "username": "Leonard Hofstadter"
-        },
-        {
-          "id": "2",
-          "text": "Can't wait to try it out.",
-          "username": "Penny"
-        }
-      ]
-    },
-    {
       "id": "4",
       "title": "Understanding Grock: The AI with a Twist",
       "body": "Grock introduces a new twist to AI with its innovative processing techniques. It uses a layered approach to break down complex problems, making it efficient in solving intricate issues. Grock's adaptability makes it suitable for various industries.",
@@ -63,58 +44,6 @@
           "id": "1",
           "text": "Grock is very interesting!",
           "username": "Mike Ross"
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "title": "Llama 2: Advancements in AI",
-      "body": "Llama 2 offers significant advancements in AI, particularly in natural language understanding. It introduces features that enhance performance and accuracy, making it ideal for businesses integrating AI into operations. The model also boasts improved efficiency.",
-      "author": "Richard Hendricks",
-      "date": "2024-03-03",
-      "comments": [
-        {
-          "id": "1",
-          "text": "Llama 2 is a game changer!",
-          "username": "Erlich Bachman"
-        },
-        {
-          "id": "2",
-          "text": "Impressive technology.",
-          "username": "Dinesh Chugtai"
-        }
-      ]
-    },
-    {
-      "id": "6",
-      "title": "Langchain: Connecting AI Components",
-      "body": "Langchain provides a framework to connect various AI components seamlessly. It simplifies the development process and enhances performance. Langchain's modular design allows developers to mix and match components based on specific needs.",
-      "author": "Ross Geller",
-      "date": "2024-01-02",
-      "comments": [
-        {
-          "id": "1",
-          "text": "Langchain is a useful tool for developers.",
-          "username": "Rachel Green"
-        }
-      ]
-    },
-    {
-      "id": "7",
-      "title": "Langsmith: Crafting AI Solutions",
-      "body": "Langsmith focuses on crafting tailored AI solutions for different industries. It develops customized models that deliver optimal results, ensuring businesses can leverage AI technology effectively. Langsmith's expertise spans various domains.",
-      "author": "Monica Geller",
-      "date": "2024-04-01",
-      "comments": [
-        {
-          "id": "1",
-          "text": "Langsmith has great potential.",
-          "username": "Chandler Bing"
-        },
-        {
-          "id": "2",
-          "text": "This is very informative.",
-          "username": "Joey Tribbiani"
         }
       ]
     },
@@ -169,6 +98,62 @@
           "username": "Full-Stack Dev"
         }
       ]
+    },
+    {
+      "id": "0a43",
+      "title": "When will we get our god damn visa?",
+      "body": "All we get are bullshit ...",
+      "author": "The Moose",
+      "date": "June 27, 2024"
+    },
+    {
+      "title": "AAA2",
+      "body": "AAAA AAAA AAAA",
+      "author": "AA",
+      "date": "12345",
+      "id": "4b90"
+    },
+    {
+      "id": "6bde",
+      "title": "BBB",
+      "body": "BBB BBB",
+      "author": "BBB author",
+      "date": "June 1, 2024"
+    },
+    {
+      "id": "528b",
+      "title": "YYY",
+      "body": "YYY YYY",
+      "author": "YYY Author",
+      "date": "June 1, 2024"
+    },
+    {
+      "id": "77cd",
+      "title": "CCC",
+      "body": "CCC CCC",
+      "author": "ccc author",
+      "date": "1 june 2024"
+    },
+    {
+      "id": "c5fb",
+      "title": "DDD",
+      "body": "DDD DDD",
+      "author": "ddd author",
+      "date": "June 1, 2024"
+    },
+    {
+      "id": "b3f6",
+      "title": "EEE",
+      "body": "EEE EEE",
+      "author": "eee author",
+      "date": "June 2, 2024"
+    },
+    {
+      "id": "b5e7",
+      "title": "AAA1",
+      "body": "AAAAAAAAAAAAAAAAAAA",
+      "author": "aaa",
+      "date": "1234"
     }
   ]
 }

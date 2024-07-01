@@ -41,7 +41,7 @@ const Navbar = () => {
     };
   }, [supabase]);
 
-  console.log("User:", user);
+  // console.log("User:", user);
 
   return (
     <div className="bg-primary dark:bg-slate-700 py-2 px-5 flex justify-between">
@@ -59,7 +59,7 @@ const Navbar = () => {
       <div className="flex items-center">
         <ThemeToggler />
 
-        {user && <span className="mr-3">{user.email}</span>}
+        {user && <span className="mr-3 text-white">{user.email}</span>}
 
         <DropdownMenu>
           <DropdownMenuTrigger>
