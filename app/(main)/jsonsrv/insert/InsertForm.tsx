@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { createPost } from "@/services/jsonsrvPostServices";
+import { useJsonsrvPostStore } from "@/store/useJsonsrvPostStore";
+import { Post } from "@/types/posts";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -36,6 +38,7 @@ const formSchema = z.object({
 
 const InsertForm = () => {
   const { toast } = useToast();
+  const addPost = useJsonsrvPostStore((state) => state.addPost);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,11 +52,11 @@ const InsertForm = () => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const result = await createPost(data);
-      console.log("Post created:", result);
+      await addPost(data as Post);
+      console.log("Post created:", data);
       toast({
         title: "Post created successfully",
-        description: `Updated by ${result.author} on ${result.date}`,
+        description: `Updated by ${data.author} on ${data.date}`,
       });
     } catch (error: any) {
       console.error("Error creating post:", error);

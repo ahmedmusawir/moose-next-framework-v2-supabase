@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
+
+import React from "react";
 import {
   Table,
   TableBody,
@@ -21,26 +23,23 @@ interface PostsTableProps {
   posts?: Post[];
 }
 
-const PostsTable = ({ limit, title, posts }: PostsTableProps) => {
+const PostsTable = ({ limit, title }: PostsTableProps) => {
   const {
     isModalOpen,
     selectedPostId,
     openModal,
     closeModal,
     removePost,
+    posts,
     totalPosts,
-    getTotalPosts,
   } = useJsonsrvPostStore();
 
   // Sorting alphabetically with post limit
-  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, 20);
-
-  useEffect(() => {
-    getTotalPosts();
-  }, [posts, getTotalPosts]);
+  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, limit);
 
   return (
     <div className="mt-10">
+      {/* <h3 className="text-2xl mb-4 font-semibold">{title ? title : "Posts"}</h3> */}
       <h3 className="text-2xl mb-4 font-semibold">
         {title ? title : "Posts"} ({totalPosts})
       </h3>

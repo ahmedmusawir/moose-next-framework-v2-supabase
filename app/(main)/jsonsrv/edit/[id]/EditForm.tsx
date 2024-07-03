@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Post } from "@/types/posts";
-import { editPost } from "@/services/jsonsrvPostServices";
+import { useJsonsrvPostStore } from "@/store/useJsonsrvPostStore";
 
 interface Props {
   post: Post;
@@ -40,6 +40,7 @@ const formSchema = z.object({
 
 const EditForm = ({ post }: Props) => {
   const { toast } = useToast();
+  const editPost = useJsonsrvPostStore((state) => state.editPost);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,10 +54,13 @@ const EditForm = ({ post }: Props) => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const updatedPost = await editPost(post.id, data);
+      await editPost({
+        ...post,
+        ...data,
+      });
       toast({
         title: "Post has been updated successfully",
-        description: `Updated by ${updatedPost.author} on ${updatedPost.date}`,
+        description: `Updated by ${data.author} on ${data.date}`,
       });
     } catch (error) {
       console.error("Error updating post:", error);

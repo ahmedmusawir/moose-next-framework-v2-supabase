@@ -11,9 +11,9 @@ import {
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
-  postId: string;
   onClose: () => void;
   onConfirm: () => void;
+  postId: string;
 }
 
 const PostDeleteModal = ({

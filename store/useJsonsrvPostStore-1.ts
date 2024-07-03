@@ -1,52 +1,44 @@
 import { create } from "zustand";
+import { Post } from "@/types/posts";
 import {
   getPosts,
+  deletePost,
   createPost,
   editPost,
-  deletePost,
 } from "@/services/jsonsrvPostServices";
-import { Post } from "@/types/posts";
 
 interface PostState {
   posts: Post[];
-  totalPosts: number;
   isModalOpen: boolean;
   selectedPostId: string | null;
   fetchPosts: () => Promise<void>;
-  addPost: (post: Post) => Promise<void>;
-  editPost: (updatedPost: Post) => Promise<void>;
-  removePost: (id: string) => Promise<void>;
-  getTotalPosts: () => void;
-  openModal: (id: string) => void;
+  addPost: (post: Post) => void;
+  editPost: (post: Post) => void;
+  removePost: (postId: string) => Promise<void>;
+  openModal: (postId: string) => void;
   closeModal: () => void;
+  totalPosts: number;
 }
 
-export const useJsonsrvPostStore = create<PostState>((set, get) => ({
+export const useJsonsrvPostStore = create<PostState>((set) => ({
   posts: [],
-  totalPosts: 0,
   isModalOpen: false,
   selectedPostId: null,
-
   getTotalPosts: () => {
     set((state) => ({
       totalPosts: state.posts.length,
     }));
   },
-
   fetchPosts: async () => {
     const posts = await getPosts();
     set({ posts });
-    get().getTotalPosts(); // Call getTotalPosts after setting posts
   },
-
   addPost: async (post: Post) => {
     const newPost = await createPost(post);
     set((state) => ({
       posts: [...state.posts, newPost],
     }));
-    get().getTotalPosts(); // Call getTotalPosts after adding a post
   },
-
   editPost: async (updatedPost: Post) => {
     const editedPost = await editPost(updatedPost.id, updatedPost);
     set((state) => ({
@@ -54,22 +46,20 @@ export const useJsonsrvPostStore = create<PostState>((set, get) => ({
         post.id === editedPost.id ? editedPost : post
       ),
     }));
-    get().getTotalPosts(); // Call getTotalPosts after editing a post
   },
-
-  removePost: async (id: string) => {
-    await deletePost(id);
+  removePost: async (postId: string) => {
+    await deletePost(postId);
     set((state) => ({
-      posts: state.posts.filter((post) => post.id !== id),
+      posts: state.posts.filter((post) => post.id !== postId),
     }));
-    get().getTotalPosts(); // Call getTotalPosts after removing a post
   },
-
-  openModal: (id: string) => {
-    set({ isModalOpen: true, selectedPostId: id });
+  openModal: (postId: string) => {
+    set({ isModalOpen: true, selectedPostId: postId });
   },
-
   closeModal: () => {
     set({ isModalOpen: false, selectedPostId: null });
+  },
+  get totalPosts() {
+    return this.posts.length;
   },
 }));
