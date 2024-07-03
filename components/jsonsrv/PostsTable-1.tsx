@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -14,8 +14,8 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Post } from "@/types/posts";
 import PostDeleteModal from "./PostDeleteModal";
+import { deletePost } from "@/services/jsonsrvPostServices";
 import { getFilteredAndSortedPosts } from "@/utils/jsonSrv/jsonsrvUtils";
-import { useJsonsrvPostStore } from "@/store/useJsonsrvPostStore";
 
 interface PostsTableProps {
   limit?: number;
@@ -23,18 +23,24 @@ interface PostsTableProps {
   posts?: Post[];
 }
 
-const PostsTable = ({ limit, title }: PostsTableProps) => {
-  const {
-    isModalOpen,
-    selectedPostId,
-    openModal,
-    closeModal,
-    removePost,
-    posts,
-  } = useJsonsrvPostStore();
+const PostsTable = ({ limit, title, posts }: PostsTableProps) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   // Sorting alphabetically with post limit
-  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, limit);
+  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, 20);
+
+  // Opens the Delete Confirmatin Modal and Updates the Selected ID
+  const handleDeleteClick = (id: string) => {
+    setSelectedPostId(id);
+    setModalOpen(true);
+  };
+
+  // Closing the Delete Confirmation Modal
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedPostId(null); // Reset selectedPostId
+  };
 
   return (
     <div className="mt-10">
@@ -62,7 +68,7 @@ const PostsTable = ({ limit, title }: PostsTableProps) => {
                 </Link>
                 <Button
                   className="bg-red-400 text-white ml-2"
-                  onClick={() => openModal(post.id)}
+                  onClick={() => handleDeleteClick(post.id)}
                 >
                   Delete
                 </Button>
@@ -75,10 +81,10 @@ const PostsTable = ({ limit, title }: PostsTableProps) => {
         <PostDeleteModal
           isOpen={isModalOpen}
           postId={selectedPostId}
-          onClose={closeModal}
-          onConfirm={async () => {
-            await removePost(selectedPostId);
-            closeModal();
+          onClose={handleModalClose}
+          onConfirm={() => {
+            deletePost(selectedPostId);
+            handleModalClose();
           }}
         />
       )}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -23,18 +23,12 @@ interface PostsTableProps {
   posts?: Post[];
 }
 
-const PostsTable = ({ limit, title }: PostsTableProps) => {
-  const {
-    isModalOpen,
-    selectedPostId,
-    openModal,
-    closeModal,
-    removePost,
-    posts,
-  } = useJsonsrvPostStore();
+const PostsTable = ({ limit, title, posts }: PostsTableProps) => {
+  const { isModalOpen, selectedPostId, openModal, closeModal, removePost } =
+    useJsonsrvPostStore();
 
   // Sorting alphabetically with post limit
-  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, limit);
+  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, 20);
 
   return (
     <div className="mt-10">

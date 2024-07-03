@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { createPost } from "@/services/jsonsrvPostServices";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -35,7 +36,6 @@ const formSchema = z.object({
 
 const InsertForm = () => {
   const { toast } = useToast();
-  // const post = posts.find((post) => post.id === id);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,19 +49,7 @@ const InsertForm = () => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch("http://localhost:3001/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create post");
-      }
-
-      const result = await response.json();
+      const result = await createPost(data);
       console.log("Post created:", result);
       toast({
         title: "Post created successfully",

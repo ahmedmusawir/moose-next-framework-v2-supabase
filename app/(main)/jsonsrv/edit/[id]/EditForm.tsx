@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Post } from "@/types/posts";
+import { editPost } from "@/services/jsonsrvPostServices";
 
 interface Props {
   post: Post;
@@ -52,21 +53,10 @@ const EditForm = ({ post }: Props) => {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch(`http://localhost:3001/posts/${post.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update post");
-      }
-
+      const updatedPost = await editPost(post.id, data);
       toast({
         title: "Post has been updated successfully",
-        description: `Updated by ${post.author} on ${post.date}`,
+        description: `Updated by ${updatedPost.author} on ${updatedPost.date}`,
       });
     } catch (error) {
       console.error("Error updating post:", error);
