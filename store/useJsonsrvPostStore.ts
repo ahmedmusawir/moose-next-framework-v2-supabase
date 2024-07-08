@@ -34,9 +34,8 @@ export const useJsonsrvPostStore = create<PostState>((set, get) => ({
   },
 
   fetchPosts: async () => {
-    const posts = await getPosts();
-    set({ posts });
-    get().getTotalPosts(); // Call getTotalPosts after setting posts
+    const response = await getPosts();
+    set({ posts: response.data, totalPosts: response.totalPosts });
   },
 
   addPost: async (post: Post) => {

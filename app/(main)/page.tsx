@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Folder, Folders, MessageCircle, Newspaper, User } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <main className="">
       <div className="flex flex-col md:flex-row sm:flex-wrap justify-center gap-5 mb-5">

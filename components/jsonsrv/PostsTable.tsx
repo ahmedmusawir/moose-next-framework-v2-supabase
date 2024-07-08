@@ -33,7 +33,7 @@ const PostsTable = ({ limit, title, posts }: PostsTableProps) => {
   } = useJsonsrvPostStore();
 
   // Sorting alphabetically with post limit
-  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, 20);
+  const sortedFilteredPosts = getFilteredAndSortedPosts(posts, limit);
 
   useEffect(() => {
     getTotalPosts();

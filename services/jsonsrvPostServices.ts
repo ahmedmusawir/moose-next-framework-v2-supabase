@@ -10,16 +10,18 @@ export const getPosts = async () => {
       "Content-Type": "application/json",
     },
     next: {
-      revalidate: 0, // Ensure fresh data on every 10sec. ISR implementation
+      revalidate: 0,
     },
-    cache: "no-store", // Ensure the fetch request bypasses any cache. SSR Implementation
+    cache: "no-store",
   });
 
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
   }
 
-  return res.json();
+  const data = await res.json();
+  const totalPosts = data.length;
+  return { data, totalPosts };
 };
 
 // Creates new post into the Json Server

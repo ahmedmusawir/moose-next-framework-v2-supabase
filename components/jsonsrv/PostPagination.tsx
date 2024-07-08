@@ -8,26 +8,66 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const PostPagination = () => {
+interface PostPaginationProps {
+  currentPage: number;
+  totalPages: number;
+  setCurrentPage: (page: number) => void;
+}
+
+const PostPagination = ({
+  currentPage,
+  totalPages,
+  setCurrentPage,
+}: PostPaginationProps) => {
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" />
+          {/* <PaginationPrevious href="#" onClick={handlePrevious} /> */}
+          <PaginationPrevious
+            href="#"
+            onClick={handlePrevious}
+            className={currentPage === 1 ? "cursor-not-allowed opacity-50" : ""}
+          />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink className="bg-red-500 text-white" href="#">
-            1
-          </PaginationLink>
-          <PaginationLink href="#">2</PaginationLink>
-          <PaginationLink href="#">3</PaginationLink>
-          <PaginationLink href="#">4</PaginationLink>
+          {[...Array(totalPages)].map((_, index) => (
+            <PaginationLink
+              key={index}
+              href="#"
+              className={
+                currentPage === index + 1 ? "bg-red-500 text-white" : ""
+              }
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </PaginationLink>
+          ))}
         </PaginationItem>
         <PaginationItem>
           <PaginationEllipsis />
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext href="#" />
+          {/* <PaginationNext href="#" onClick={handleNext} /> */}
+          <PaginationNext
+            href="#"
+            onClick={handleNext}
+            className={
+              currentPage === totalPages ? "cursor-not-allowed opacity-50" : ""
+            }
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

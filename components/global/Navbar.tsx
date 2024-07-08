@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -16,10 +16,35 @@ import ThemeToggler from "./ThemeToggler";
 import Logout from "../auth/Logout";
 import { User as SupabaseUser } from "@supabase/auth-js";
 import { createClient } from "@/utils/supabase/client";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const supabase = createClient();
+  const pathname = usePathname();
+
+  interface NavLinkProps {
+    href: string;
+    children: ReactNode;
+  }
+
+  // PREPARING THE NAVLINK WITH ACTIVE LINK
+  const NavLink = ({ href, children }: NavLinkProps) => {
+    const isActive = pathname === href;
+
+    return (
+      <Link
+        href={href}
+        className={`text-gray-600 dark:text-white px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white ${
+          isActive
+            ? "border-b-4 border-indigo-500 text-gray-900"
+            : "border-b-4 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+        }`}
+      >
+        {children}
+      </Link>
+    );
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -56,6 +81,14 @@ const Navbar = () => {
         />
       </Link>
 
+      {/* NAVIGATION */}
+      <nav className="hidden sm:ml-6 sm:flex flex-grow justify-center items-center">
+        <NavLink href="/demo">Demo</NavLink>
+        <NavLink href="/moose-gpt-3">Chat 3</NavLink>
+        <NavLink href="/moose-translate-gpt">Language Assistant</NavLink>
+      </nav>
+
+      {/* DARK MODE BUTTON */}
       <div className="flex items-center">
         <ThemeToggler />
 
