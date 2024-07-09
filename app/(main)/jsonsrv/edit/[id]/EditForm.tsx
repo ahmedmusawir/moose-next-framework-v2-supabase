@@ -41,6 +41,7 @@ const formSchema = z.object({
 const EditForm = ({ post }: Props) => {
   const { toast } = useToast();
   const editPost = useJsonsrvPostStore((state) => state.editPost);
+  const notFound = post === null;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,6 +74,11 @@ const EditForm = ({ post }: Props) => {
 
   return (
     <>
+      {notFound && (
+        <div className="bg-red-500 text-yellow-300 p-4 mb-4">
+          The Post Not Found
+        </div>
+      )}
       <h1 className="text-2xl mb-4">Edit Form</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">

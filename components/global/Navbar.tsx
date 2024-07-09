@@ -69,7 +69,7 @@ const Navbar = () => {
   // console.log("User:", user);
 
   return (
-    <div className="bg-primary dark:bg-slate-700 py-2 px-5 flex justify-between">
+    <div className="bg-slate-700 dark:bg-slate-700 py-2 px-5 flex justify-between">
       <Link href={"/"}>
         <Image
           src={
@@ -84,8 +84,8 @@ const Navbar = () => {
       {/* NAVIGATION */}
       <nav className="hidden sm:ml-6 sm:flex flex-grow justify-center items-center">
         <NavLink href="/demo">Demo</NavLink>
-        <NavLink href="/moose-gpt-3">Chat 3</NavLink>
-        <NavLink href="/moose-translate-gpt">Language Assistant</NavLink>
+        <NavLink href="/loading-example">Suspension Test</NavLink>
+        <NavLink href="/xxx">Global 404</NavLink>
       </nav>
 
       {/* DARK MODE BUTTON */}

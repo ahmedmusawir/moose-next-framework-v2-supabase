@@ -57,7 +57,9 @@ const PostsTable = ({ limit, title, posts }: PostsTableProps) => {
           {sortedFilteredPosts?.map((post) => (
             <TableRow key={post.id}>
               <TableCell>
-                {post.title} POST ID: {post.id}
+                <Link href={`/jsonsrv/${post.id}`}>
+                  {post.title} POST ID: {post.id}
+                </Link>
               </TableCell>
               <TableCell>{post.author}</TableCell>
               <TableCell>{post.date}</TableCell>
